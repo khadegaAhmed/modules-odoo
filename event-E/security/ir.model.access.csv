@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+event_user,event_user ,model_organizer_event,base.group_user,1,1,1,1
+material_user,material_user,model_material_event,base.group_user,1,1,1,1

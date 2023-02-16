@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <odoo>
+
+        <!-- Add instructor field to existing view -->
+        <record model="ir.ui.view" id="view_event_form_inherit">
+            <field name="name">event.inherit</field>
+            <field name="model">event.event</field>
+            <field name="inherit_id" ref="event.view_event_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='organizer_id']" position="after">
+         <field name="last_name_id" string="Organizer"/>
+        </xpath>
+
+                 <xpath expr="//field[@name='address_id']" position="after">
+          <field name="theme_event" string="Theme Event"/>
+        </xpath>
+                 <xpath expr="//field[@name='organizer_id']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+                <xpath expr="//field[@name='tag_ids']" position="after">
+          <field name="partner_id" string="Organizer(new type of partner)"/>
+        </xpath>
+
+
+
+                     <xpath expr="//page[@name='event_communication']" position="after">
+         <page string="Material">
+<!--              <field name="materials_ids"/>-->
+                        <tree>
+                            <field name="materials_ids"/>
+                        </tree>
+                  </page>
+        </xpath>
+
+
+
+            </field>
+        </record>
+
+
+
+
+<!--    organizer-->
+     <record model="ir.ui.view" id="organizer_form_view">
+            <field name="name">organizer.form</field>
+            <field name="model">organizer.event</field>
+<!--          <field name="inherit_id" ref="event.view_event_kanban"/>-->
+            <field name="arch" type="xml">
+
+                <form string="Organizer Form">
+                    <sheet>
+
+                            <group string="Name">
+                            <field name="first_name" />
+                            <field name="last_name" />
+                                </group>
+                         <group string="Organizer Information">
+                             <field name="my_select"/>
+                            <field name="phone" widget="phone" options="{'enable_sms':false}" placeholder="Enter phone number with out country code"/>
+                            <field name="mail" widget="email" />
+
+                        </group>
+<!--                         <notebook>-->
+<!--                            <page string="events">-->
+<!--                                <field name="event_ids"/>-->
+
+<!--                                    <tree string="Registered sessions">-->
+<!--                                        <field name="theme_event"/>-->
+<!--                                    </tree>-->
+<!--                              </page>-->
+<!--                        </notebook>-->
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+<record model="ir.ui.view" id="organizer_tree_view">
+            <field name="name">organ.tree</field>
+            <field name="model">organizer.event</field>
+            <field name="arch" type="xml">
+                <tree string="Organizer Tree">
+<!--                    <field name="name"/>-->
+                    <field name="first_name"/>
+                    <field name="last_name"/>
+                    <field name="my_select"/>
+                    <field name="mail"/>
+                    <field name="phone"/>
+
+                </tree>
+            </field>
+        </record>
+    <record model="ir.actions.act_window" id="organizer_list_action">
+            <field name="name">Organizer</field>
+            <field name="res_model">organizer.event</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create the first Organizer
+                </p>
+            </field>
+        </record>
+
+
+        <!-- top level menu: no parent -->
+        <!-- the following menuitem should appear *after*
+             its parent openacademy_menu and *after* its
+             action course_list_action -->
+<!--        <menuitem id="organizer_menu" name="Organizer" parent="event_main_menu"-->
+     <menuitem id="organizer_menu" name="Organizers"
+                  action="organizer_list_action" parent="event.menu_event_configuration" sequence="5"/>
+
+
+
+
+
+<!--    new type of parent (organizer)-->
+     <record model="ir.ui.view" id="view_form_inhert">
+            <field name="name">organizer.ev</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="category_id" position="after">
+                    <field name="is_organizer" string="Is Organizer"/>
+                </field>
+            </field>
+        </record>
+<!--    <menuitem id="omenu" name="Organizer_parent"-->
+<!--                  action="organizer_action"/>-->
+</odoo>
